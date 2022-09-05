@@ -191,14 +191,11 @@
                             </div>
                             <div class="count">
                                 <h2>Số lượng:</h2>
-                                <div class="count">
-                                    <input id="button" class="minus" type="button" value="-">
-                                    <input id="number" class="input-qty" max="" min="1" name="" type="number" value="1">
-                                    <input id="button" class="plus" type="button" value="+">
-                                    <button type="button" id="addtocart" onclick="location.href='giohang.php';">Thêm
-                                        vào giỏ
-                                        hàng</button>
-                                </div>
+                                    <div>
+                                        <span class="increase">-</span>
+                                        <span class="value">0</span>
+                                        <span class="reduction">+</span>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -528,7 +525,24 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="trangchu.js"></script>
     <script src="chitietsanpham.js"></script>
-
+    <script src="https://cdnjs.cloudfare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+$(function () {
+    let $elm_value = $(".value");
+    $('.increase').click(function (){
+        let $value_increase = parseInt($elm_value.text());
+        if ($value_increase <= 1) {
+            return false;
+    }
+    $elm_value.text($value_increase - 1);
+    })
+    $('.reduction').click(function (){
+        let $value_increase = parseInt($elm_value.text());
+        $elm_value.text($value_increase + 1);
+    })
+})
+    
+    </script>
 </body>
 
 </html>

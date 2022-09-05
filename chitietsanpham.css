@@ -171,10 +171,6 @@ input[type='radio']:checked:before {
     margin-bottom: 20px;
 }
 
-.count {
-    display: flex;
-}
-
 #button {
     height: 37px;
     width: 30px;
@@ -597,4 +593,20 @@ input[type='radio']:checked:before {
     text-decoration: none;
     color: var(--color4);
 
+}
+
+.count > div{
+    display: flex;
+    margin-top: 10px;
+}
+
+.count > span{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    margin-right: 5px;
+    margin-left: 5px;
+    line-height: 25px;
+    text-align: center;
+    cursor: pointer;
 }
