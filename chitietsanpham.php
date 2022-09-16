@@ -191,11 +191,10 @@
                             </div>
                             <div class="count">
                                 <h2>Số lượng:</h2>
-                                    <div>
-                                        <span class="increase">-</span>
-                                        <span class="value">0</span>
-                                        <span class="reduction">+</span>
-                                    </div>
+                                <span id="increase" class="increase">-</span>
+                                <span class="value">1</span>
+                                <span id="reduction" class="reduction">+</span>
+                                    <button type="button" id="addtocart" onclick="location.href='giohang.php';">Thêm vào giỏ hàng</button>
                             </div>
                         </div>
                     </div>
@@ -527,21 +526,21 @@
     <script src="chitietsanpham.js"></script>
     <script src="https://cdnjs.cloudfare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
-$(function () {
-    let $elm_value = $(".value");
-    $('.increase').click(function (){
-        let $value_increase = parseInt($elm_value.text());
-        if ($value_increase <= 1) {
-            return false;
-    }
-    $elm_value.text($value_increase - 1);
+    $(function () {
+        let $elm_value = $(".value");
+        $('.increase').click(function (){
+            let $value_increase = parseInt($elm_value.text());
+            if ($value_increase <= 1) {
+                return false;
+        }
+        $elm_value.text($value_increase - 1);
+        })
+        $('.reduction').click(function (){
+            let $value_increase = parseInt($elm_value.text());
+            $elm_value.text($value_increase + 1);
+        })
     })
-    $('.reduction').click(function (){
-        let $value_increase = parseInt($elm_value.text());
-        $elm_value.text($value_increase + 1);
-    })
-})
-    
+        
     </script>
 </body>
 

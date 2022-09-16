@@ -174,7 +174,7 @@
                         <p> Bạn cũng có thể nhập mã giảm giá ở trang thanh toán.</p>
                     </div>
                     <div class="thanhtoan">
-                        <button type="submit" onclick="location.href='#';">THANH TOÁN</button>
+                        <button type="submit" onclick="location.href='thanhtoan.php';">THANH TOÁN</button>
                     </div>
                     <a href="trangchu.php">Tiếp tục mua hàng</a>
                 </div>

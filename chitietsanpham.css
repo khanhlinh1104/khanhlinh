@@ -211,11 +211,12 @@ input[type='radio']:checked:before {
     border: none;
     margin-left: 20px;
     border-radius: 25px 25px 25px 25px;
-    height: 37px;
+    height: 45px;
     width: 200px;
     color: var(--color3);
     font-size: var(--font-size3);
     font-weight: lighter;
+    margin-top: 5px;
 }
 
 #imgMain {
@@ -595,18 +596,29 @@ input[type='radio']:checked:before {
 
 }
 
-.count > div{
+.count{
     display: flex;
-    margin-top: 10px;
 }
 
 .count > span{
-    width: 25px;
+    width: 50px;
     height: 25px;
     display: inline-block;
-    margin-right: 5px;
-    margin-left: 5px;
     line-height: 25px;
     text-align: center;
     cursor: pointer;
+    margin-top: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #EFF2F5;
+} 
+
+#increase{
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+#reduction{
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
 }

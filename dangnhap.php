@@ -145,14 +145,14 @@
                 <img src="./imge/logo.webp" alt="">
                 <h4>đăng nhập</h4>
             </div>
-            <form action="xuly.php" method="POST">
+            <form action="" method="POST">
                 <div class="form_group">
                     <label for="login-email">Email*</label>
-                    <input type="email" id="login-email" name="email" class="form-control" required>
+                    <input type="email" id="login-email" name="email" class="form-control" value = "" required>
                 </div>
                 <div class="form_group">
                     <label for="login-password">Mật khẩu*</label>
-                    <input type="password" id="login-password" name="password" class="form-control" required>
+                    <input type="password" id="login-password" name="password" class="form-control" value = "" required>
 
                 </div>
                 <div class="forget">
@@ -293,3 +293,46 @@
 </body>
 
 </html>
+<?php
+//Khai báo sử dụng session
+session_start();
+//Khai báo utf-8 để hiển thị được tiếng việt
+header('Content-Type: text/html; charset=UTF-8');
+//Xử lý đăng nhập
+if (isset($_POST['submit']))
+{
+        //Kết nối tới database
+        $connect = mysqli_connect ('localhost', 'root', '123456', 'banhang') or die ('Không thể kết nối tới database');
+
+        if($connect === false){ 
+        die("ERROR: Could not connect. " . mysqli_connect_error()); 
+        }
+        else {
+        // echo 'Kết nối DB thành công!';
+        }
+        
+        //Lấy dữ liệu nhập vào
+        $email = ($_POST['email']);
+        $password = ($_POST['password']);
+     
+    //Kiểm tra tên đăng nhập có tồn tại không
+    $query = mysqli_query($connect, "SELECT * FROM login WHERE email='$email'");
+    $row = mysqli_fetch_array($query);
+    if (mysqli_num_rows($query) == 0) {
+        echo '<script>alert("Tên đăng nhập này không tồn tại. Vui lòng kiểm tra lại.")</script>';
+    } else if ($password != $row["password"]) {
+        echo '<script>alert("Mật khẩu không đúng. Vui lòng nhập lại.")</script>';
+    } else {
+        $_SESSION['email'] = $email;
+        echo '<script>alert("Bạn đã đăng nhập thành công.")</script>'; ;
+    ?>
+        <script> location.href = 'trangchu.php'; </script>
+    <?php
+    }
+    die();
+     
+    //Lưu tên đăng nhập
+    
+    
+}
+?>
