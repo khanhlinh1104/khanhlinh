@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +13,7 @@
 
 <body>
     <!-- Header -->
-
+<!-- ewqew -->
     <div class="header" id="lendau">
         <div class="header_top">
             <ul class="header_top_left_left">
@@ -172,91 +173,52 @@
         </div>
         <!-- End Body_middle_2 -->
 
-        <!-- Body_middle_3 -->
+        <!-- Body_middle_3 -->        
         <div class="body_middle_three" id="like">
-            <div class="body_middle_three_top">
-                <div>
-                    <span>Sản phẩm được nhiều KOL & Celeb yêu thích</span>
+            <div  class="body_middle_three_top">
+                <div class="body_middle_three_top_left">
+                <span>Sản phẩm được nhiều KOL & Celeb yêu thích</span>
                 </div>
-                <div class="more">
-                    <a href="">Xem thêm</a>
+                <div  class="more">
+                    <a href="">Xem Thêm</a>
                 </div>
             </div>
-            <div class="body_middle_three_bottom">
-                <div class="one">
-                    <img src="./imge/son_1_main.webp" alt="" class="son_1_main">
-                    <img src="./imge/son_1_1_main.jpg" alt="" class="son_1_1_main">
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Mara Hot Water Tint</a>
-                    <span>298,000đ</span>
-                </div>
-                <div class="one">
-                    <img src="./imge/son_2_main.webp" alt="" class="son_1_main">
-                    <img src="./imge/son_2_1_main.webp" alt="" class="son_1_1_main">
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Airfit Velvet Tint Ver 8</a>
-                    <span>298,000đ</span>
-                </div>
-                <div class="one">
-                    <img src="./imge/son_3_main.webp" alt="" class="son_1_main">
-                    <img src="./imge/son_3_1_main.webp" alt="" class="son_1_1_main">
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Half N Half Water Glow Season 2</a>
-                    <span>298,000đ</span>
-                </div>
-                <div class="one">
-                    <img src="./imge/son_4_main.webp" alt="" class="son_1_main">
-                    <img src="./imge/son_4_1_main.webp" alt="" class="son_1_1_main">
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Drop Eye Stick Glitz</a>
-                    <span>318,000đ</span>
-                </div>
-
-
+            <div id="product-grid" >
+            <?php
+                	require_once("dbcontroller.php");
+                    $db_handle = new DBController();
+	                $product_array = $db_handle->runQuery("SELECT * FROM  sanpham WHERE SanYeuThich = 1 ");
+	                if (!empty($product_array)) { 
+                        foreach($product_array as $key=>$value){
+                            ?>
+                            <div class="one" >
+                                <form method="post" action="giohang.php?action=add&code=<?php echo $product_array[$key]["code"]; ?>">
+                                <div class="product-image" ><img src="<?php echo $product_array[$key]["image"]; ?>"></div>
+			                    <div class="product-tile-footer">
+                                    <div class="product-title"><a href="chitietsanpham.php"><?php echo $product_array[$key]["name"]; ?> </a></div>
+                                    <div class="product-price"><?php echo "$".$product_array[$key]["price"]; ?></div>
+                                    <div class="report"> 
+                                         <div class="star">
+                                         <?php
+                                         for($u=0;$u<5;$u++){
+                                            ?>
+                                            <i class="fa fa-star"></i>
+                                            <?php
+                                             }
+                                              ?>
+                                         </div>
+                                    <div class="heart">
+                                        <button id="heart_btn"> <i class="fa fa-heart"></i> </button>
+                                    </div>
+                                    </div>
+                                     <div class="cart-action"><input type="text" class="product-quantity" name="quantity" value="1" size="2" /><input type="submit" value="THÊM" class="btnAddAction" /></div>
+			                    </div>
+			                    </form>
+		                    </div>
+	                    <?php
+	                    	}
+                        }
+	                    ?>
             </div>
         </div>
         <!-- End body_middle_3 -->
@@ -278,125 +240,45 @@
                     <a href="">Xem Thêm</a>
                 </div>
             </div>
-            <div class="body_middle_five_bottom">
-                <div class="two">
-                    <img src="./imge/3.PNG" alt="" class="son_2_main">
-                    <img src="./imge/1.PNG" alt="" class="son_2_1_main">
-                    <div class="bay">
-                        <span>Sắp ra mắt</span>
-                    </div>
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Drop Eye Stick Glitz</a>
-                    <span class="new">Sắp ra mắt</span>
-                </div>
-                <div class="two">
-                    <img src="./imge/4.webp" alt="" class="son_2_main">
-                    <img src="./imge/4.webp" alt="" class="son_2_1_main">
-
-                    <div class="bay_two">
-                        <span>Sắp ra mắt</span>
-                    </div>
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Drop Eye Stick Glitz</a>
-                    <span class="new">Sắp ra mắt</span>
-                </div>
-                <div class="two">
-                    <img src="./imge/6.webp" alt="" class="son_2_main">
-                    <img src="./imge/7.webp" alt="" class="son_2_1_main">
-
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Drop Eye Stick Glitz</a>
-                    <div class="test_span">
-                        <span class="test_span_one">318,000đ</span>
-                        <span class="test_span_two">218,000đ</span>
-                    </div>
-                    <div class="bay_three">
-                        <span class="persen">-10%</span>
-                    </div>
-                </div>
-                <div class="two">
-                    <img src="./imge/8.webp" alt="" class="son_2_main">
-                    <img src="./imge/9.webp" alt="" class="son_2_1_main">
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Drop Eye Stick Glitz</a>
-                    <div class="test_span">
-                        <span class="test_span_one" style="color: gray;">318,000đ</span>
-                        <span class="test_span_two">218,000đ</span>
-                    </div>
-                    <div class="bay_three">
-                        <span class="persen">-10%</span>
-                    </div>
-                </div>
-                <div class="two">
-                    <img src="./imge/son_3_main.webp" alt="" class="son_2_main">
-                    <img src="./imge/son_3_1_main.webp" alt="" class="son_2_1_main">
-                    <div class="report">
-                        <div class="star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                        </div>
-                        <div class="heart">
-                            <button id="heart_btn_btn"> <i class="fa fa-heart"></i> </button>
-                        </div>
-                    </div>
-                    <a href="chitietsanpham.php" target="_blank">Black Rouge Drop Eye Stick Glitz</a>
-                    <div class="test_span">
-                        <span class="test_span_one" style="color: gray;">318,000đ</span>
-                        <span class="test_span_two">218,000đ</span>
-                    </div>
-                    <div class="bay_three">
-                        <span class="persen">-10%</span>
-                    </div>
-                </div>
+            <div id="product-grid" >
+            <?php
+                	require_once("dbcontroller.php");
+                    $db_handle = new DBController();
+	                $product_array = $db_handle->runQuery("SELECT * FROM  sanpham  ORDER BY id DESC LIMIT 4");
+	                if (!empty($product_array)) { 
+                        foreach($product_array as $key=>$value){
+                            ?>
+                            <div class="one" >
+                                <form method="post" action="giohang.php?action=add&code=<?php echo $product_array[$key]["code"]; ?>">
+                                <div class="product-image" ><img src="<?php echo $product_array[$key]["image"]; ?>"></div>
+			                    <div class="product-tile-footer">
+                                    <div class="product-title"><a href="chitietsanpham.php"><?php echo $product_array[$key]["name"]; ?> </a></div>
+                                    <div class="product-price"><?php echo "$".$product_array[$key]["price"]; ?></div>
+                                    <div class="report">
+                                         <div class="star">
+                                         <?php
+                                         for($u=0;$u<5;$u++){
+                                            ?>
+                                            <i class="fa fa-star"></i>
+                                            <?php
+                                             }
+                                              ?>
+                                         </div>
+                                    <div class="heart">
+                                        <button id="heart_btn"> <i class="fa fa-heart"></i> </button>
+                                    </div>
+                                    </div>
+                                     <div class="cart-action"><input type="text" class="product-quantity" name="quantity" value="1" size="2" />
+                                     <input type="submit" value="THÊM" class="btnAddAction" />
+                                    </div>
+			                    </div>
+			                    </form>
+		                    </div>
+	                    <?php
+	                    	}
+                        }
+	                    ?>
             </div>
-
         </div>
         <!-- ENd body_middle_5 -->
         <!-- Body_middle_6 -->
@@ -411,16 +293,24 @@
                 <div class="body_middle_seven_top_left">
                     <a href="">Sản phẩm bán chạy</a>
                 </div>
-                <div class="test">
-                </div>
+                <div class="test"></div>
                 <div class="body_middle_seven_top_right">
                     <a href="">Xem Thêm</a>
                 </div>
             </div>
             <div class="body_middle_seven_bottom">
+            <?php
+            $mylist_seven = ['./imge/anh_body_7_1.webp','./imge/anh_body_7_2.webp','./imge/anh_body_7_3.webp','./imge/anh_body_7_4.webp','./imge/anh_body_7_5.webp','./imge/anh_body_7_6.webp','./imge/anh_body_7_7.webp','./imge/anh_body_7_8.webp'];
+            // $mylist_hover_two = ['./imge/1.PNG','./imge/4.webp','./imge/7.webp','./imge/9.webp','./imge/son_3_1_main.webp'];
+            $len = count($mylist_seven);
+            ?>   
+            <div class = "to">
+            <?php
+            for($i=0;$i<$len;$i++){
+            ?>
                 <div class="body_miidle_seven_bottom_in yi">
                     <div>
-                        <a href="chitietsanpham.php" target="_blank"> <img src="./imge/anh_body_7_1.webp" alt=""></a>
+                        <a href="chitietsanpham.php" target="_blank"> <img src="<?php echo $mylist_seven[$i] ?>" alt=""></a>
                     </div>
                     <div>
                         <a href="chitietsanpham.php" target="_blank"><span>Black Rouge Airfit Velvet Tint Ver 1 THE
@@ -432,115 +322,28 @@
 
                     </div>
                 </div>
-                <div class="body_miidle_seven_bottom_in yi">
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"> <img src="./imge/anh_body_7_2.webp" alt=""></a>
-                    </div>
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"><span>Black Rouge Airfit Velvet Tint Ver 2 Mood
-                                Filter
-                            </span></a>
-                        <div class="gia">
-                            <p class="gia_1">318,000đ</p>
-                            <p class="gia_2">268,200đ</p>
-                        </div>
 
-                    </div>
-                </div>
-                <div class="body_miidle_seven_bottom_in yi">
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"> <img src="./imge/anh_body_7_3.webp" alt=""></a>
-                    </div>
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"><span>Black Rouge Airfit Velvet Tint Ver 4 Bad
-                                Rose</span></a>
-                        <div class="gia">
-                            <p class="gia_1">318,000đ</p>
-                            <p class="gia_2">268,200đ</p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="body_miidle_seven_bottom_in yi">
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"> <img src="./imge/anh_body_7_4.webp" alt=""></a>
-                    </div>
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"><span>Black Rouge Airfit Velvet Tint Ver 4 Bad
-                                Rose</span></a>
-                        <div class="gia">
-                            <p class="gia_1">318,000đ</p>
-                            <p class="gia_2">268,200đ</p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="body_miidle_seven_bottom_in yi">
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"> <img src="./imge/anh_body_7_5.webp" alt=""></a>
-                    </div>
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"><span>Black Rouge Airfit Velvet Tint Ver 7 VELVET
-                                CROWN</span></a>
-                        <div class="gia">
-                            <p class="gia_1">318,000đ</p>
-                            <p class="gia_2">268,200đ</p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="body_miidle_seven_bottom_in yi">
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"> <img src="./imge/anh_body_7_6.webp" alt=""></a>
-                    </div>
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"><span>Black Rouge Airfit Velvet Tint Ver
-                                8</span></a>
-                        <div class="gia">
-                            <p class="gia_1">318,000đ</p>
-                            <p class="gia_2">268,200đ</p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="body_miidle_seven_bottom_in yi">
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"> <img src="./imge/anh_body_7_7.webp" alt=""></a>
-                    </div>
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"><span>Black Rouge Airfit Velvet Tint Ver.5
-                                BAM</span></a>
-                        <div class="gia">
-                            <p class="gia_1">318,000đ</p>
-                            <p class="gia_2">268,200đ</p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="body_miidle_seven_bottom_in yi">
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"> <img src="./imge/anh_body_7_8.webp" alt=""></a>
-                    </div>
-                    <div>
-                        <a href="chitietsanpham.php" target="_blank"><span>Black Rouge Airfit Velvet Tint Ver.3 Dry
-                                Fruit</span></a>
-                        <div class="gia">
-                            <p class="gia_1">318,000đ</p>
-                            <p class="gia_2">268,200đ</p>
-                        </div>
-
-                    </div>
-                </div>
+            
+            <?php
+            }
+            ?>
             </div>
-
+        </div>
         </div>
         <!-- End_body_middle_7 -->
         <!-- body_middle_eight -->
         <div class="body_middle_eight">
-            <img src="./imge/anh_body_8_1.webp" alt="">
-            <img src="./imge/anh_body_8_2.webp" alt="">
-            <img src="./imge/anh_body_8_3.webp" alt="">
-            <img src="./imge/anh_body_8_4.webp" alt="">
+            <?php
+            $myimg = ['./imge/anh_body_8_1.webp','./imge/anh_body_8_2.webp','./imge/anh_body_8_3.webp','./imge/anh_body_8_4.webp'];
+            $lenm = count($myimg);
+            ?>
+             <?php
+            for($i=0;$i<$lenm;$i++){
+            ?>
+            <img src="<?php echo $myimg[$i] ?>" alt="">
+            <?php
+            }
+            ?>
         </div>
         <!--End body_middle_eight -->
         <!-- Body_midlle_nine -->

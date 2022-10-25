@@ -302,7 +302,7 @@ header('Content-Type: text/html; charset=UTF-8');
 if (isset($_POST['submit']))
 {
         //Kết nối tới database
-        $connect = mysqli_connect ('localhost', 'root', '123456', 'banhang') or die ('Không thể kết nối tới database');
+        $connect = mysqli_connect("localhost","root","","blackrouge",3307) or die ('Không thể kết nối tới database');
 
         if($connect === false){ 
         die("ERROR: Could not connect. " . mysqli_connect_error()); 
@@ -316,14 +316,14 @@ if (isset($_POST['submit']))
         $password = ($_POST['password']);
      
     //Kiểm tra tên đăng nhập có tồn tại không
-    $query = mysqli_query($connect, "SELECT * FROM login WHERE email='$email'");
+    $query = mysqli_query($connect, "SELECT * FROM dangky WHERE EMAIL='$email'");
     $row = mysqli_fetch_array($query);
     if (mysqli_num_rows($query) == 0) {
         echo '<script>alert("Tên đăng nhập này không tồn tại. Vui lòng kiểm tra lại.")</script>';
-    } else if ($password != $row["password"]) {
+    } else if ($password != $row["PASSWORD"]) {
         echo '<script>alert("Mật khẩu không đúng. Vui lòng nhập lại.")</script>';
     } else {
-        $_SESSION['email'] = $email;
+        $_SESSION['EMAIL'] = $email;
         echo '<script>alert("Bạn đã đăng nhập thành công.")</script>'; ;
     ?>
         <script> location.href = 'trangchu.php'; </script>

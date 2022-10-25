@@ -1,3 +1,31 @@
+<?php
+$con = mysqli_connect("localhost","root","","blackrouge",3307);
+if (mysqli_connect_errno()) {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  exit();
+}
+?>
+<?php
+ if($_SERVER["REQUEST_METHOD"] == "POST") {
+    $lastname = $_POST['name_ho'];
+    $firtname = $_POST['name_ten'];
+    $date = $_POST['ngaysinh'];
+    $sex = $_POST['gioitinh'];
+    $email = $_POST['email'];
+    $password = $_POST['password']; 
+    if(!empty($email))
+    {
+        $sql = "INSERT INTO `dangky`(`HO`,`TEN`,`NGAYSINH`,`GIOITINH`,`EMAIL`,`PASSWORD`) VALUES('$lastname','$firtname','$date','$sex','$email','$password')";   
+        if($con->query($sql)===TRUE){
+            header("location:trangchu.php");
+        }
+        else{
+            echo 'Không thành công. Lỗi' . $connect->error;
+          }
+    }
+
+ }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +41,7 @@
 
 <body>
     <!-- Header -->
-    <div class="header" id="lendau">
+    <div class="header" id="lendau len dau">
         <div class="header_top">
             <ul class="header_top_left_left">
                 <li class="hotro"><a href="trangchu.php">trang chủ</a></li>
@@ -145,29 +173,29 @@
                 <img src="./imge/logo.webp" alt="">
                 <h4>đăng ký</h4>
             </div>
-            <form action="">
+            <form action="" method="POST">
                 <div class="form_group">
                     <label for="login-email">Họ của bạn*</label>
-                    <input type="text" id="login-email" class="form-control" required>
+                    <input type="text" id="login-email" class="form-control"  name ="name_ho" required>
                 </div>
                 <div class="form_group">
                     <label for="login-name">Tên của bạn*</label>
-                    <input type="text" id="login-email" class="form-control" required>
+                    <input type="text" id="login-email" class="form-control" name = "name_ten" required>
                 </div>
                 <div class="form_group">
                     <label for="login-date">Ngày sinh*</label>
-                    <input type="text" class="duet-date__input" placeholder="Ngày/Tháng/Năm" id="xbirthday"
-                        aria-autocomplete="none" autocomplete="off">
+                    <input type="text" class="duet-date__input" placeholder="Năm/Tháng/Ngày" id="xbirthday"
+                        aria-autocomplete="none" autocomplete="off" name ="ngaysinh">
                 </div>
                 <div class="form_group_gt">
                     <label for="login_gt" id="gt">Giới tính*</label>
                     <div class="login_gt_gt">
                         <div class="login_gt_gt_one">
-                            <input type="radio" id="login_gt_tren" class="form-control" name="gtt" checked="true">
+                            <input type="radio" value = "Nữ" id="login_gt_tren" class="form-control" name="gioitinh" checked="true">
                             <label for="">Nữ</label>
                         </div>
                         <div class="login_gt_gt_one">
-                            <input type="radio" id="login_gt_duoi" class="form-control" name="gtt">
+                            <input type="radio"  value = "Nam" id="login_gt_duoi" class="form-control" name="gioitinh">
                             <label for="">Nam</label>
                         </div>
                     </div>
@@ -175,18 +203,18 @@
                 </div>
                 <div class="form_group">
                     <label for="login-email">Email*</label>
-                    <input type="email" id="login-email" class="form-control" required>
+                    <input type="email" id="login-email" class="form-control" name ="email" required  >
                 </div>
                 <div class="form_group">
                     <label for="login-password">Mật khẩu*</label>
-                    <input type="password" id="login-password" class="form-control" required>
+                    <input type="password" id="login-password" class="form-control" name= "password" required>
 
                 </div>
                 <div class="forget">
                     <a href="#">Quên mật khẩu?</a>
                 </div>
                 <div class="form_group">
-                    <button type="submit" class="btn_dangnhap">Đăng Ký</button>
+                    <button type="submit" class="btn_dangnhap" class="nut">Đăng Ký</button>
                 </div>
                 <div class="form_ngoai">
                     <div class="btn_gg">

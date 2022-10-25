@@ -1,3 +1,50 @@
+<?php
+session_start();
+require_once("dbcontroller.php");
+$db_handle = new DBController();
+if(!empty($_GET["action"])) {
+switch($_GET["action"]) {
+	case "add":
+		if(!empty($_POST["quantity"])) {
+			$productByCode = $db_handle->runQuery("SELECT * FROM sanpham WHERE code='" . $_GET["code"] . "'");
+			// $productByCode = $db_handle->runQuery("SELECT * FROM tblproduct WHERE code='" . $_GET["code"] . "'");
+			$itemArray = array($productByCode[0]["code"]=>array('name'=>$productByCode[0]["name"], 'code'=>$productByCode[0]["code"], 'quantity'=>$_POST["quantity"], 'price'=>$productByCode[0]["price"], 'image'=>$productByCode[0]["image"]));
+			if(!empty($_SESSION["cart_item"])) {
+				if(in_array($productByCode[0]["code"],array_keys($_SESSION["cart_item"]))) {
+					foreach($_SESSION["cart_item"] as $k => $v) {
+							if($productByCode[0]["code"] == $k) {
+								if(empty($_SESSION["cart_item"][$k]["quantity"])) {
+									$_SESSION["cart_item"][$k]["quantity"] = 0;
+								}
+								$_SESSION["cart_item"][$k]["quantity"] += $_POST["quantity"];
+							}
+					}
+				} else {
+					$_SESSION["cart_item"] = array_merge($_SESSION["cart_item"],$itemArray);
+				}
+			} else {
+				$_SESSION["cart_item"] = $itemArray;
+			}
+		}
+	break;
+	case "remove":
+		if(!empty($_SESSION["cart_item"])) {
+			foreach($_SESSION["cart_item"] as $k => $v) {
+					if($_GET["code"] == $k)
+						unset($_SESSION["cart_item"][$k]);				
+					if(empty($_SESSION["cart_item"]))
+						unset($_SESSION["cart_item"]);
+			}
+		}
+	break;
+	case "empty":
+		unset($_SESSION["cart_item"]);
+	break;
+    // case "back":
+    //     header("location:trangchu.php");
+}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -143,44 +190,69 @@
                 </div>
             </div>
         </div>
+        <div >
         <div class="body_content">
-            <div class="body_content_head">
-                <h1><a href="#">Trang chủ </a>/ Giỏ hàng (0)</h1>
-            </div>
             <div class="body_content_body">
                 <div class="body_content_body1">
-
                     <h1>Giỏ hàng của bạn</h1>
-                    <h2>Có 0 sản phẩm trong giỏ hàng</h2>
-
-                    <div class="body_content_body1_inside">
-                    </div>
                 </div>
             </div>
-            <div class="body_content_mainbody">
-                <div class="body_content_mainbody_left">
-                    <h1>Giỏ hàng của bạn đang trống</h1>
-                </div>
-                <div class="body_content_mainbody_right">
-                    <div class="body_content_mainbody_right_top">
-                        <h1>Thông tin đơn hàng</h1>
-                    </div>
-                    <div class="body_content_mainbody_right_center">
-                        <h1>Tổng tiền:</h1>
-                        <h2>0₫</h2>
-                    </div>
-                    <div class="body_content_mainbody_right_bottom">
-                        <p>Phí vận chuyển sẽ được tính ở trang thanh toán.</p>
-                        <p> Bạn cũng có thể nhập mã giảm giá ở trang thanh toán.</p>
-                    </div>
-                    <div class="thanhtoan">
-                        <button type="submit" onclick="location.href='thanhtoan.php';">THANH TOÁN</button>
-                    </div>
-                    <a href="trangchu.php">Tiếp tục mua hàng</a>
-                </div>
-            </div>
+            <div>
+            <?php
+            if(isset($_SESSION["cart_item"])){
+                $total_quantity = 0;
+                $total_price = 0;
+                ?>	
+            <table class="tbl-cart" cellpadding="10" cellspacing="1"   border-collapse="collapse" style:"margin-top:50px">
+                <tbody>
+                    <tr>
+                        <th style="text-align:left;">Name</th>
+                        <th style="text-align:left;">Code</th>
+                        <th style="text-align:right;" width="5%">Quantity</th>
+                        <th style="text-align:right;" width="10%">Unit Price</th>
+                        <th style="text-align:right;" width="10%">Price</th>
+                        <th style="text-align:center;" width="5%">Remove</th>
+                    </tr>	
+                    <?php		
+                    foreach ($_SESSION["cart_item"] as $item){
+                        $item_price = $item["quantity"]*$item["price"];
+                        ?>
+                        <tr>
+                            <td><img src="<?php echo $item["image"]; ?>" class="cart-item-image" /><?php echo $item["name"]; ?></td>
+                            <td><?php echo $item["code"]; ?></td>
+				            <td style="text-align:right;"><?php echo $item["quantity"]; ?></td>
+				            <td  style="text-align:right;"><?php echo "$ ".$item["price"]; ?></td>
+				            <td  style="text-align:right;"><?php echo "$ ". number_format($item_price,2); ?></td>
+				            <td style="text-align:center;"><a href="giohang.php?action=remove&code=<?php echo $item["code"]; ?>" class="btnRemoveAction"><img src="imge/icon-delete.png" alt="Remove Item" /></a></td>
+				        </tr>
+                        <?php
+                        $total_quantity += $item["quantity"];
+				        $total_price += ($item["price"]*$item["quantity"]);
+                    }
+                    ?>
+                    <tr>
+                        <td colspan="2" align="right">Total:</td>
+                        <td align="right"><?php echo $total_quantity; ?></td>
+                        <td align="right" colspan="2"><strong><?php echo "$ ".number_format($total_price, 2); ?></strong></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>		
+            <?php
+            } else {
+                ?>
+                <div class="no-records">Your Cart is Empty</div>
+                <?php 
+                }
+                ?>
+                <a id="back" href="trangchu.php">Mua Sắm Tiếp</a>
+                <a id="btnEmpty" href="giohang.php?action=empty">Empty Cart</a>
+                <a id="btntt" href="thanhtoan.php">Thanh Toán</a>
+             </div>
         </div>
-
+      
+    </div>
+          
         <!-- body_middle_ten -->
         <div class="body_middle_ten">
             <img src="./imge/anh_body_10_1.webp" alt="">
