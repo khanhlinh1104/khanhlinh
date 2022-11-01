@@ -622,3 +622,20 @@ input[type='radio']:checked:before {
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
 }
+#myList li{ display:none;
+}
+#loadMore {
+    color:green;
+    cursor:pointer;
+}
+#loadMore:hover {
+    color:black;
+}
+#showLess {
+    color:red;
+    cursor:pointer;
+    display:none;
+}
+#showLess:hover {
+    color:black;
+}

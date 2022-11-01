@@ -199,14 +199,15 @@
                         </div>
                     </div>
                     <div class="body_content_left2">
-                        <div>
+                        <div >
                             <h1>Mô tả sản phẩm</h1>
-                            <p>Ẩm thực - khái niệm tưởng chừng như không liên quan đến nhau
+                        <p>Ẩm thực - khái niệm tưởng chừng như không liên quan đến nhau
                                 làm đẹp, nhưng đã trở thành một nguồn cảm hứng độc đáo, mới lạ để
                                 Black Rouge cho ra mắt dòng son mới MARA HOT WATER TINT với 6 sắc
                                 màu cá tính, thời trang mà bạn không thể bỏ qua trong mùa hè năm nay.</p>
                             <p><b>Màu son:</b></p>
-                            <ul class="decor">
+                            <ul class="decor" id = "myList">
+                            
                                 <li><b>LV00 Mild MARA:</b> Màu cam ánh vàng gợi lên hình ảnh dịu dàng và thanh thoát.
                                 </li>
                                 <li><b>LV01 Spicy MARA:</b> Màu đỏ rực rỡ pha chút sắc cam tạo nên sự năng động và trẻ
@@ -221,21 +222,24 @@
                                     .</li>
                                 <li><b>LV05 Panic MARA:</b> Màu tím mận vừa nữ tính nhưng lại không “bánh bèo” mang đến
                                     nét “sang chảnh” và bí ẩn.</li>
-                            </ul>
+                            
                             <p><b>Gợi ý cách mix n match phù hợp với tone da:</b></p>
                             <p><b>Đối với tone da ấm</b></p>
-                            <ul class="decor">
+                            
                                 <li>Lớp base: LV00</li>
                                 <li>Lòng môi: LV03</li>
                                 <li>Full môi: Half N Half Tangle Glow.</li>
-                            </ul>
+                            
                             <p><b>Đối với tone da lạnh</b></p>
-                            <ul class="decor">
+                            
                                 <li>Lớp base: LV02</li>
                                 <li>Lòng môi: LV05</li>
                                 <li>Full môi: Half N Half Tangle Glow.</li>
                             </ul>
+                            <div id="loadMore">Load More</div>
+                            <div id="showLess">Show less</div>
                         </div>
+                        
                         <div>
                             <h1>Đánh giá sản phẩm</h1>
                             <div class="rate_top">
@@ -540,8 +544,30 @@
             $elm_value.text($value_increase + 1);
         })
     })
-        
+    $(document).ready(function () {
+    size_li = $("#myList li").size();
+    x=2;
+    $('#myList li:lt('+x+')').show();
+    $('#loadMore').click(function () {
+        x= (x+5 <= size_li) ? x+1 : size_li;
+        $('#myList li:lt('+x+')').show();
+         $('#showLess').show();
+        if(x == size_li){
+            $('#loadMore').hide();
+        }
+    });
+    $('#showLess').click(function () {
+        x=(x-5<0) ? 3 : x-5;
+        $('#myList li').not(':lt('+x+')').hide();
+        $('#loadMore').show();
+         $('#showLess').show();
+        if(x == 3){
+            $('#showLess').hide();
+        }
+    });
+});
     </script>
+    
 </body>
 
 </html>
